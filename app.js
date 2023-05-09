@@ -33,9 +33,9 @@ dimensionHours.addEventListener("click", addDimensionHours);
 dimensionMinutes.addEventListener("click", addDimensionMinutes);
 dimensionSeconds.addEventListener("click", addDimensionSeconds);
 
-// //listeners for presets
-// presetWeek.addEventListener("click", applyPresetWeek);
-// presetMonth.addEventListener("click", applyPresetMonth);
+//listeners for presets
+presetWeek.addEventListener("click", applyPresetWeek);
+presetMonth.addEventListener("click", applyPresetMonth);
 
 // listeners for dates inputs
 calculateBtn.addEventListener("click", calculateDiff);
@@ -62,6 +62,11 @@ const dimensionsValues = {
     seconds: false,
 }
 
+const presetValues = {
+    addWeek: false,
+    addMonth: false,
+}
+
 function changeInput(e) {
   const  { target } = e;
 
@@ -72,6 +77,8 @@ function changeInput(e) {
 
   if (name === 'firstInput') {
     secondDateInput.disabled = false;
+    presetWeek.disabled = false;
+    presetMonth.disabled = false;
   }
 }
 
@@ -211,27 +218,80 @@ function addDimensionSeconds(e) {
     }
 }
 
+function applyPresetWeek(e) {
+    if (e.target.checked) {
+        console.log('applyPresetWeek ON -->', e.target.checked);
+        // disable other checkboxes
+        presetMonth.disabled = true;
+
+        // activate option for calculations
+        presetValues.addWeek = true;
+        setPresetValue();
+    } else {
+        console.log('applyPresetWeek OFF -->', e.target.checked);
+        // enable back checkboxes
+        presetMonth.disabled = false;
+
+        presetValues.addWeek = false;
+        clearPresetValue()
+    }
+}
+
+function applyPresetMonth(e) {
+    if (e.target.checked) {
+        console.log('applyPresetMonth ON -->', e.target.checked);
+        // disable other checkboxes
+        presetWeek.disabled = true;
+
+        // activate option for calculations
+        presetValues.addMonth = true;
+        setPresetValue();
+    } else {
+        console.log('applyPresetMonth OFF -->', e.target.checked);
+        // enable back checkboxes
+        presetWeek.disabled = false;
+
+        presetValues.addMonth = false;
+        clearPresetValue()
+    }
+}
+
+// TODO: disable presets if the first date is not given
+function setPresetValue() {
+    const selectedPreset = Object.keys(presetValues)
+        .find(key => presetValues[key] === true);
+
+    const { firstInput } = values;
+    let endDate = new Date(firstInput);
+
+    if (selectedPreset === 'addWeek') {
+        endDate.setDate(endDate.getDate() + 7);
+        secondDateInput.value = endDate.toISOString().slice(0, 10);
+        values.secondInput = new Date(secondDateInput.value);
+    }
+    if (selectedPreset === 'addMonth') {
+        endDate.setMonth(endDate.getMonth() + 1);
+        console.log('endDate -->', endDate);
+        secondDateInput.value = endDate.toISOString().slice(0, 10);
+        values.secondInput = new Date(secondDateInput.value);
+    }
+}
+
+function clearPresetValue() {
+    secondDateInput.value = '';
+    // need to clear also set variable value
+    values.secondInput = '';
+}
+
 function showValidationMessage() {
-    //make message displayed
   validationMessage.removeAttribute("hidden");
-  console.log("message appeared");
 }
 
 function hideValidationMessage() {
     if (!validationMessage.hasAttribute("hidden")) {
-        console.log('validationMessage -->', validationMessage);
         validationMessage.setAttribute("hidden", '');
     }
     return;
-}
-
-// TODO: add calculations
-function getCalculatedDates() {
-    let dates;
-    // get calculated dates from local storage
-    // check for length, if length >= 10 - remove last element
-    // add new element to the beginning of the array
-    // every array element is an object with three properties: firstDate, secondDate, result
 }
 
 function getSelectedOptions() {
@@ -254,10 +314,9 @@ function getPeriodMilliseconds(startDate, endDate, periodOption) {
 
     if (givenPerionOption === 'allDay') {
         // calculate all days result in milliseconds
-        // allDayMilliseconds =  Math.abs(endDate - currentDate);
         allDayMilliseconds = endDate - startDate;
         console.log('allDayMilliseconds -->', allDayMilliseconds);
-        return allDayMilliseconds + 86400000;
+        return allDayMilliseconds;
     }
 
     if (givenPerionOption === 'weekDay') {
@@ -271,7 +330,7 @@ function getPeriodMilliseconds(startDate, endDate, periodOption) {
           }
           // Return the number of weekday milliseconds
           console.log('weekdayMilliseconds -->', weekdayMilliseconds);
-          return weekdayMilliseconds;
+          return weekdayMilliseconds - 86400000;
     }
 
     if (givenPerionOption === 'weekendDay') {
@@ -287,7 +346,6 @@ function getPeriodMilliseconds(startDate, endDate, periodOption) {
           console.log('weekendDaysMilliseconds -->', weekendDaysMilliseconds);
           return weekendDaysMilliseconds;
     }
-
 }
 
 function calculateDimension(period, dimension) {
