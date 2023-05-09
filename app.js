@@ -23,15 +23,15 @@ const datesCollectionTitle = document.querySelector(".calculated-dates-title")
 const validationMessage = document.getElementById("validation-message");
 
 // listeners for options checkboxes
-optionAllDays.addEventListener("change", addOptionAllDays);
+optionAllDays.addEventListener("click", addOptionAllDays);
 optionWeekDays.addEventListener("click", addOptionWeekDays);
 optionWeekendDays.addEventListener("click", addOptionWeekendDays);
 
-// //listeners for dimensions checkboxes
-// dimensionDays.addEventListener("click", addDimensionDays);
-// dimensionHours.addEventListener("click", addDimensionHours);
-// dimensionMinutes.addEventListener("click", addDimensionMinutes);
-// dimensionSeconds.addEventListener("click", addDimensionSeconds);
+//listeners for dimensions checkboxes
+dimensionDays.addEventListener("click", addDimensionDays);
+dimensionHours.addEventListener("click", addDimensionHours);
+dimensionMinutes.addEventListener("click", addDimensionMinutes);
+dimensionSeconds.addEventListener("click", addDimensionSeconds);
 
 // //listeners for presets
 // presetWeek.addEventListener("click", applyPresetWeek);
@@ -50,16 +50,16 @@ const values = {
 }
 
 const optionsValues = {
-    allDayValue: null,
-    weekDayValue: null,
-    weekendDayValue: null,
+    allDay: false,
+    weekDay: false,
+    weekendDay: false,
 }
 
 const dimensionsValues = {
-    days: null,
-    hours: null,
-    minutes: null,
-    seconds: null,
+    days: false,
+    hours: false,
+    minutes: false,
+    seconds: false,
 }
 
 function changeInput(e) {
@@ -79,40 +79,135 @@ function changeInput(e) {
 function addOptionAllDays(e) {
     if (e.target.checked) {
         console.log('addOptionAllDays ON -->', e.target.checked);
+        // disable other checkboxes
         optionWeekDays.disabled = true;
         optionWeekendDays.disabled = true;
-
-        optionsValues.allDayValue = true;
+        // activate option for calculations
+        optionsValues.allDay = true;
     } else {
         console.log('addOptionAllDays OFF -->', e.target.checked);
+        // enable back checkboxes
         optionWeekDays.disabled = false;
         optionWeekendDays.disabled = false;
 
-        optionsValues.allDayValue = false;
+        optionsValues.allDay = false;
     }
 }
 
 function addOptionWeekDays(e) {
     if (e.target.checked) {
         console.log('addOptionWeekDays ON -->', e.target.checked);
+        // disable other checkboxes
         optionAllDays.disabled = true;
-        optionsValues.weekDayValue = true;
+        optionWeekendDays.disabled = true;
+        // activate option for calculations
+        optionsValues.weekDay = true;
     } else {
         console.log('addOptionWeekDays OFF -->', e.target.checked);
+        // enable back checkboxes
         optionAllDays.disabled = false;
-        optionsValues.weekDayValue = false;
+        optionWeekendDays.disabled = false;
+
+        optionsValues.weekDay = false;
     }
 }
 
 function addOptionWeekendDays(e) {
     if (e.target.checked) {
         console.log('addOptionWeekendDays ON -->', e.target.checked);
+        // disable other checkboxes
         optionAllDays.disabled = true;
-        optionsValues.weekendDayValue = true;
+        optionWeekDays.disabled = true;
+        // activate option for calculations
+        optionsValues.weekendDay = true;
     } else {
         console.log('addOptionWeekendDays OFF -->', e.target.checked);
+        // enable back checkboxes
         optionAllDays.disabled = false;
-        optionsValues.weekendDayValue = false;
+        optionWeekDays.disabled = false;
+
+        optionsValues.weekendDay = false;
+    }
+}
+
+// dimension options checkboxes behavior while active/inactive
+function addDimensionDays(e) {
+    if (e.target.checked) {
+        console.log('addDimensionDays ON -->', e.target.checked);
+        // disable other checkboxes
+        dimensionHours.disabled = true;
+        dimensionMinutes.disabled = true;
+        dimensionSeconds.disabled = true;
+        // activate option for calculations
+        dimensionsValues.days = true;
+    } else {
+        console.log('addDimensionDays OFF -->', e.target.checked);
+        // enable back checkboxes
+        dimensionHours.disabled = false;
+        dimensionMinutes.disabled = false;
+        dimensionSeconds.disabled = false;
+
+        dimensionsValues.days = false;
+    }
+}
+
+function addDimensionHours(e) {
+    if (e.target.checked) {
+        console.log('addDimensionHours ON -->', e.target.checked);
+        // disable other checkboxes
+        dimensionDays.disabled = true;
+        dimensionMinutes.disabled = true;
+        dimensionSeconds.disabled = true;
+        // activate option for calculations
+        dimensionsValues.hours = true;
+    } else {
+        console.log('addDimensionHours OFF -->', e.target.checked);
+        // enable back checkboxes
+        dimensionDays.disabled = false;
+        dimensionMinutes.disabled = false;
+        dimensionSeconds.disabled = false;
+
+        dimensionsValues.hours = false;
+    }
+}
+
+function addDimensionMinutes(e) {
+    if (e.target.checked) {
+        console.log('addDimensionMinutes ON -->', e.target.checked);
+        // disable other checkboxes
+        dimensionHours.disabled = true;
+        dimensionDays.disabled = true;
+        dimensionSeconds.disabled = true;
+        // activate option for calculations
+        dimensionsValues.minutes = true;
+    } else {
+        console.log('addDimensionMinutes OFF -->', e.target.checked);
+        // enable back checkboxes
+        dimensionHours.disabled = false;
+        dimensionDays.disabled = false;
+        dimensionSeconds.disabled = false;
+
+        dimensionsValues.minutes = false;
+    }
+}
+
+function addDimensionSeconds(e) {
+    if (e.target.checked) {
+        console.log('addDimensionSeconds ON -->', e.target.checked);
+        // disable other checkboxes
+        dimensionHours.disabled = true;
+        dimensionMinutes.disabled = true;
+        dimensionDays.disabled = true;
+        // activate option for calculations
+        dimensionsValues.seconds = true;
+    } else {
+        console.log('addDimensionSeconds OFF -->', e.target.checked);
+        // enable back checkboxes
+        dimensionHours.disabled = false;
+        dimensionMinutes.disabled = false;
+        dimensionDays.disabled = false;
+
+        dimensionsValues.seconds = false;
     }
 }
 
@@ -124,12 +219,13 @@ function showValidationMessage() {
 
 function hideValidationMessage() {
     if (!validationMessage.hasAttribute("hidden")) {
-        // validationMessage.setAttribute("hidden");
         console.log('validationMessage -->', validationMessage);
+        validationMessage.setAttribute("hidden", '');
     }
     return;
 }
 
+// TODO: add calculations
 function getCalculatedDates() {
     let dates;
     // get calculated dates from local storage
@@ -138,57 +234,105 @@ function getCalculatedDates() {
     // every array element is an object with three properties: firstDate, secondDate, result
 }
 
-function getWeekdaysMilliseconds(startDate, endDate) {
-    // Copy the start date
-    var currentDate = new Date(startDate);
-    // Initialize the total milliseconds to 0
-    var weekdayMilliseconds = 0;
-    // Loop until the current date is after the end date
-    while (currentDate <= endDate) {
-      // Is the current day a weekday?
-      if (currentDate.getDay() !== 0 && currentDate.getDay() !== 6) {
-        weekdayMilliseconds += 86400000; // add milliseconds for one day
-      }
-      // Move to the next day
-      currentDate.setDate(currentDate.getDate() + 1);
-    }
-    // Return the number of weekday milliseconds
-    return weekdayMilliseconds;
-  }
-
-function getWeekendDaysMilliseconds(startDate, endDate) {
-    // Copy the start date
-    var currentDate = new Date(startDate);
-    // Initialize the count of weekend days to 0
-    var weekendDaysMilliseconds = 0;
-    // Loop until the current date is after the end date
-    while (currentDate <= endDate) {
-      // Is the current day a weekend day?
-      if (currentDate.getDay() === 0 || currentDate.getDay() === 6) {
-        weekendDaysMilliseconds += 86400000;
-      }
-      // Move to the next day
-      currentDate.setDate(currentDate.getDate() + 1);
-    }
-    // Return the number of weekend days
-    return weekendDaysMilliseconds;
+function getSelectedOptions() {
+    const selectedOptions = {};
+    selectedOptions.selectedDimension = Object.keys(dimensionsValues)
+        .find(key => dimensionsValues[key] === true);
+    selectedOptions.selectedOption = Object.keys(optionsValues)
+        .find(key => optionsValues[key] === true);
+    console.log('getSelectedOptions func inside -->', selectedOptions);
+    return selectedOptions;
 }
-  
+
+function getPeriodMilliseconds(startDate, endDate, periodOption) {
+    // if no option period selected setup all days to calculate
+    const givenPerionOption = periodOption ?? 'allDay';
+    let currentDate = new Date(startDate);
+    let allDayMilliseconds = 0;
+    let weekdayMilliseconds = 0;
+    let weekendDaysMilliseconds = 0;
+
+    if (givenPerionOption === 'allDay') {
+        // calculate all days result in milliseconds
+        // allDayMilliseconds =  Math.abs(endDate - currentDate);
+        allDayMilliseconds = endDate - startDate;
+        console.log('allDayMilliseconds -->', allDayMilliseconds);
+        return allDayMilliseconds + 86400000;
+    }
+
+    if (givenPerionOption === 'weekDay') {
+        while (currentDate <= endDate) {
+            // Is the current day a weekday?
+            if (currentDate.getDay() !== 0 && currentDate.getDay() !== 6) {
+              weekdayMilliseconds += 86400000; // add milliseconds for one day
+            }
+            // Move to the next day
+            currentDate.setDate(currentDate.getDate() + 1);
+          }
+          // Return the number of weekday milliseconds
+          console.log('weekdayMilliseconds -->', weekdayMilliseconds);
+          return weekdayMilliseconds;
+    }
+
+    if (givenPerionOption === 'weekendDay') {
+        while (currentDate <= endDate) {
+            // Is the current day a weekend day?
+            if (currentDate.getDay() === 0 || currentDate.getDay() === 6) {
+              weekendDaysMilliseconds += 86400000;
+            }
+            // Move to the next day
+            currentDate.setDate(currentDate.getDate() + 1);
+          }
+          // Return the number of weekend days
+          console.log('weekendDaysMilliseconds -->', weekendDaysMilliseconds);
+          return weekendDaysMilliseconds;
+    }
+
+}
+
+function calculateDimension(period, dimension) {
+    // if no dimension was selected setup default value to 'days'
+    const givenDimension = dimension ?? 'days';
+    const givenPeriod = period;
+
+    const dayInMilliseconds = 86400000;
+    const secondsInMillisecond = 1000;
+    const minutesInHour = 60;
+    const hoursInDay = 24;
+    let result;
+
+    // TODO: rework statement to pass it if givenPeriod === 0
+    if (!!givenPeriod === false) {
+        return 'incorrect parameters';
+    }
+    if (givenDimension === 'days') {
+        result = `${Math.ceil(givenPeriod / dayInMilliseconds)} days`;
+        return result;
+    }
+    if (givenDimension === 'hours') {
+        result = `${Math.ceil((givenPeriod / dayInMilliseconds) * hoursInDay)} hours`;
+        return result;
+    }
+    if (givenDimension === 'minutes') {
+        result = `${Math.ceil(givenPeriod / (secondsInMillisecond * minutesInHour))} minutes`;
+        return result;
+    }
+    if (givenDimension === 'seconds') {
+        result = `${Math.ceil(givenPeriod / secondsInMillisecond)} seconds`;
+        return result;
+    }
+}
 
 function calculateResult(firstDateValue, secondDateValue) {
-    console.log('started calculating');
-  const weekdaysMilliseconds = getWeekdaysMilliseconds(firstDateValue, secondDateValue);
-  const weekendDaysMilliseconds = getWeekendDaysMilliseconds(firstDateValue, secondDateValue)
-  const dayInMilliseconds = 86400000;
-  const result = Math.abs(firstDateValue - secondDateValue);
-  const days = Math.ceil(result / (1000 * 60 * 60 * 24));
-  const hours = Math.ceil(result / (1000 * 60 * 60));
-  const minutes = Math.ceil(result / (1000 * 60));
-  const seconds = Math.ceil(result / 1000);
-  const milliseconds = Math.ceil(result);
+  const { selectedOption, selectedDimension } = getSelectedOptions()
+  console.log('selectedOption -->', selectedOption);
+  console.log('selectedDimension -->', selectedDimension);
+  const getPeriod = getPeriodMilliseconds(firstDateValue, secondDateValue, selectedOption);
+  const displayResult = calculateDimension(getPeriod, selectedDimension);
+
   const resultContainer = document.createElement("p");
   resultContainer.classList.add("result-container");
-  resultContainer.textContent = weekendDaysMilliseconds / dayInMilliseconds;
+  resultContainer.textContent = displayResult;
   datesBlock.insertBefore(resultContainer, datesCollectionTitle)
 }
 
@@ -202,17 +346,16 @@ function calculateResult(firstDateValue, secondDateValue) {
 
 function calculateDiff(e) {
   if (values.firstInput >= values.secondInput) {
-    // calculateBtn.disabled = true;
     showValidationMessage();
+    // clear the results field/value
     return;
   }
-
-//   calculateBtn.disabled = false;
 
   hideValidationMessage();
   console.log(
     'values.firstInput -->', values.firstInput,
-    '<br>',
+    '\n',
+    '\n',
     'values.secondInput -->', values.secondInput
   );
   calculateResult(values.firstInput, values.secondInput);
