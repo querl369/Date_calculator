@@ -128,7 +128,25 @@
       <div class="calculated-dates-block">
         <h4 class="calculated-dates-result">Result</h4>
         <p id="validation-message" hidden>Введіть дату, що є пізнішою за першу</p>
-        <h4 class="calculated-dates-title">Calculated dates list</h4>
+        <p id="displayed-result"></p>
+        <h4 class="calculated-dates-title">Calculated dates</h4>
+        <table id="dates-history" style="width:100%" hidden>
+          <thead>
+            <tr>
+              <th>
+                First Date
+              </th>
+              <th>
+                Second Date
+              </th>
+              <th>
+                Differences
+              </th>
+            </tr>
+          </thead>
+          <tbody id="add-dates">
+          </tbody>
+        </table>
         <div class="dates-collection"></div>
       </div>
     </div>

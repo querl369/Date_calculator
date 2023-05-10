@@ -21,6 +21,10 @@ const datesBlock = document.querySelector(".calculated-dates-block");
 const datesList = document.querySelector(".dates-collection");
 const datesCollectionTitle = document.querySelector(".calculated-dates-title");
 const validationMessage = document.getElementById("validation-message");
+const resultContainer = document.getElementById("displayed-result");
+const datesHistory = document.getElementById("dates-history");
+const addDates = document.getElementById("add-dates");
+
 
 // document.addEventListener("DOMContentLoaded", getDates);
 
@@ -255,7 +259,6 @@ function applyPresetMonth(e) {
   }
 }
 
-// TODO: disable presets if the first date is not given
 function setPresetValue() {
   const selectedPreset = Object.keys(presetValues).find(
     (key) => presetValues[key] === true
@@ -387,46 +390,79 @@ function calculateDimension(period, dimension) {
   }
 }
 
+function addAndFillNewRows(params) {
+params.forEach(element => {
+    // get the table element by its ID
+    const table = addDates;
+
+    // create a new row
+    const newRow = document.createElement("tr");
+  
+    // create three new cells
+    const cell1 = document.createElement("td");
+    const cell2 = document.createElement("td");
+    const cell3 = document.createElement("td");
+
+    cell1.style.textAlign = "center";
+    cell2.style.textAlign = "center";
+    cell3.style.textAlign = "center";
+  
+    // add content to the cells (replace with your own values)
+    cell1.innerHTML = element.firstDate;
+    cell2.innerHTML = element.secondDate;
+    cell3.innerHTML = element.difference;
+  
+    // append the cells to the new row
+    newRow.appendChild(cell1);
+    newRow.appendChild(cell2);
+    newRow.appendChild(cell3);
+  
+    // insert the new row after the last existing row
+    table.appendChild(newRow);
+});
+
+
+}
+
 function checkLocalStorage() {
     let dates =[];
     if (localStorage.getItem("dates") === null) {
       return dates;
     }
     dates = JSON.parse(localStorage.getItem("dates"));
+    console.log('dates -->', dates);
     return dates;
 }
 
-function removeDatesFromLocalStorage() {
-    let dates = JSON.parse(localStorage.getItem("dates"));
-    const newDates = dates.slice(0, 9);
-    localStorage.setItem("dates", JSON.stringify(newDates));
+function displayDatesFromLocalStorage() {
+  const localStorageElements = checkLocalStorage();
+  if (localStorageElements.length === 0) {
+    return;
+  }
+  if (datesHistory.hasAttribute("hidden")) {
+    datesHistory.removeAttribute("hidden");
+  }
+  addAndFillNewRows(localStorageElements);
 }
 
-function storeTaskInLocalStorage(date) {
-//   let dates;
-//   if (localStorage.getItem("dates") === null) {
-//     dates = [];
-//   } else {
-//     dates = JSON.parse(localStorage.getItem("dates"));
-//   }
-  const localStorageElements = checkLocalStorage();
-  console.log('localStorageElements.length -->',typeof localStorageElements);
+function storeTaskInLocalStorage(calculatedDate) {
+  let elementsToAdd = [];
+  let localStorageElements = checkLocalStorage();
 
-//   if (localStorageElements.length < 10) {
-//     dates.unshift(date);
-//   }
-//   if (localStorageElements >= 10) {
-//     removeDatesFromLocalStorage();
-//     dates.unshift(date);
-//   }
+  localStorageElements.unshift(calculatedDate);
 
-//   localStorage.setItem("dates", JSON.stringify(localStorageElements));
+  if (localStorageElements.length > 10) {
+    elementsToAdd = [...localStorageElements.slice(0, 10)];
+    localStorage.clear();
+    localStorage.setItem("dates", JSON.stringify(elementsToAdd));
+  } else {
+    elementsToAdd = [...localStorageElements];
+    localStorage.setItem("dates", JSON.stringify(elementsToAdd));
+  }
 }
 
 function calculateResult(firstDateValue, secondDateValue) {
   const { selectedOption, selectedDimension } = getSelectedOptions();
-  console.log("selectedOption -->", selectedOption);
-  console.log("selectedDimension -->", selectedDimension);
   const getPeriod = getPeriodMilliseconds(
     firstDateValue,
     secondDateValue,
@@ -435,17 +471,14 @@ function calculateResult(firstDateValue, secondDateValue) {
   const displayResult = calculateDimension(getPeriod, selectedDimension);
 
   const localStorageValue = {
-    "First Date": firstDateValue.toDateString(),
-    "Second Date": secondDateValue.toDateString(),
-    "Difference": displayResult,
+    firstDate: firstDateValue.toDateString(),
+    secondDate: secondDateValue.toDateString(),
+    difference: displayResult,
   };
   storeTaskInLocalStorage(localStorageValue);
-  console.log("localStorageValue -->", localStorageValue);
+  displayDatesFromLocalStorage();
 
-  const resultContainer = document.createElement("p");
-  resultContainer.classList.add("result-container");
   resultContainer.textContent = displayResult;
-  datesBlock.insertBefore(resultContainer, datesCollectionTitle);
 }
 
 function calculateDiff(e) {
