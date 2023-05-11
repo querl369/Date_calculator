@@ -27,57 +27,28 @@
           <div class="option-days">
             <h4>How to calculate dates</h4>
 
-            <input 
-              type="checkbox"
-              name="allDays"
-              id="allDays"
-            />
+            <input type="checkbox" name="allDays" id="allDays" />
             <label for="allDays">All Days</label>
 
-            <input 
-              type="checkbox"
-              name="weekDays"
-              id="weekDays"
-            />
+            <input type="checkbox" name="weekDays" id="weekDays" />
             <label for="weekDays">Weekdays only</label>
 
-            <input 
-              type="checkbox"
-              name="weekendDays"
-              id="weekendDays"
-            />
+            <input type="checkbox" name="weekendDays" id="weekendDays" />
             <label for="weekendDays">Weekends only</label>
-
           </div>
           <div class="option-calculations">
             <h4>Dimensions to calculate</h4>
 
-            <input 
-              type="checkbox"
-              name="days"
-              id="days"
-            />
+            <input type="checkbox" name="days" id="days" />
             <label for="days">In days</label>
 
-            <input 
-              type="checkbox"
-              name="hours"
-              id="hours"
-            />
+            <input type="checkbox" name="hours" id="hours" />
             <label for="hours">In hours</label>
 
-            <input 
-              type="checkbox"
-              name="minutes"
-              id="minutes"
-            />
+            <input type="checkbox" name="minutes" id="minutes" />
             <label for="minutes">In minutes</label>
 
-            <input 
-              type="checkbox"
-              name="seconds"
-              id="seconds"
-            />
+            <input type="checkbox" name="seconds" id="seconds" />
             <label for="seconds">In seconds</label>
           </div>
           <div class="first-date-input">
@@ -101,22 +72,11 @@
           <div class="presets">
             <h4>Presets</h4>
 
-            <input 
-              type="checkbox"
-              name="oneWeek"
-              id="oneWeek"
-              disabled
-            />
+            <input type="checkbox" name="oneWeek" id="oneWeek" disabled />
             <label for="oneWeek">Week</label>
 
-            <input 
-              type="checkbox"
-              name="oneMonth"
-              id="oneMonth"
-              disabled
-            />
+            <input type="checkbox" name="oneMonth" id="oneMonth" disabled />
             <label for="oneMonth">Month</label>
-
           </div>
           <button type="button" class="btn" id="calculate-btn">
             Calculate
@@ -126,25 +86,20 @@
 
       <div class="calculated-dates-block">
         <h4 class="calculated-dates-result">Result</h4>
-        <p id="validation-message" hidden>Введіть дату, що є пізнішою за першу</p>
+        <p id="validation-message" hidden>
+          Введіть дату, що є пізнішою за першу
+        </p>
         <p id="displayed-result"></p>
         <h4 class="calculated-dates-title">Calculated dates</h4>
         <table id="dates-history" hidden>
           <thead>
             <tr>
-              <th>
-                First Date
-              </th>
-              <th>
-                Second Date
-              </th>
-              <th>
-                Differences
-              </th>
+              <th>First Date</th>
+              <th>Second Date</th>
+              <th>Differences</th>
             </tr>
           </thead>
-          <tbody id="add-dates">
-          </tbody>
+          <tbody id="add-dates"></tbody>
         </table>
         <div class="dates-collection"></div>
       </div>

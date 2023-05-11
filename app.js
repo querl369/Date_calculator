@@ -85,8 +85,6 @@ function changeInput(e) {
   }
 }
 
-
-
 function addOptionAllDays(e) {
   if (e.target.checked) {
     // disable other checkboxes
@@ -291,7 +289,7 @@ function getSelectedOptions() {
 
 function getPeriodMilliseconds(startDate, endDate, periodOption) {
   // if no option period selected setup all days to calculate
-  const defaultOption = 'allDay';
+  const defaultOption = "allDay";
   const givenPerionOption = periodOption ?? defaultOption;
   let currentDate = new Date(startDate);
   let allDayMilliseconds = 0;
@@ -336,7 +334,6 @@ function calculateDimension(period, dimension) {
   const hoursInDay = 24;
   let result;
 
-  // TODO: rework statement to pass it if givenPeriod === 0
   if (!!givenPeriod === false) {
     return "incorrect parameters";
   }
@@ -362,18 +359,12 @@ function calculateDimension(period, dimension) {
   }
 }
 
-// creating table rows in the beggining of the script
-// create 10 rows in <tbody>
-// wait for data from localeStorage, return nothing
-// match <tr> elements indexes with indexes from localeStorage data
-// assign text from every object using textContent to every <tr> and 3 <td> in it
-
 function createTableRows(selector, storageData) {
   const tbody = selector;
-  tbody.innerHTML = '';
-  storageData.forEach(function(dataItem) {
+  tbody.innerHTML = "";
+  storageData.forEach(function (dataItem) {
     const row = document.createElement("tr");
-    Object.values(dataItem).forEach(function(value) {
+    Object.values(dataItem).forEach(function (value) {
       const cell = document.createElement("td");
       cell.style.textAlign = "center";
       const cellText = document.createTextNode(value);
@@ -385,12 +376,12 @@ function createTableRows(selector, storageData) {
 }
 
 function checkLocalStorage() {
-    let dates =[];
-    if (localStorage.getItem("dates") === null) {
-      return dates;
-    }
-    dates = JSON.parse(localStorage.getItem("dates"));
+  let dates = [];
+  if (localStorage.getItem("dates") === null) {
     return dates;
+  }
+  dates = JSON.parse(localStorage.getItem("dates"));
+  return dates;
 }
 
 function displayDatesFromLocalStorage() {
@@ -418,7 +409,6 @@ function storeDateInLocalStorage(calculatedDate) {
   }
 
   localStorage.setItem("dates", JSON.stringify(elementsToAdd));
-
 }
 
 function calculateResult(firstDateValue, secondDateValue) {

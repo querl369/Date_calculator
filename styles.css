@@ -35,14 +35,14 @@ body {
 
 } */
 
-.presets, .option-calculations {
-    margin: auto;
-    margin-bottom: 20px;
-
+.presets,
+.option-calculations {
+  margin: auto;
+  margin-bottom: 20px;
 }
 
 .option-calculations {
-    margin-top: 20px;
+  margin-top: 20px;
 }
 
 .calculate-dates-form {
@@ -75,9 +75,9 @@ input[type="date"] {
 }
 
 h4 {
-    margin-top: 10px;
-    margin-bottom: 15px;
-    text-align: center;
+  margin-top: 10px;
+  margin-bottom: 15px;
+  text-align: center;
 }
 
 .btn {
@@ -127,7 +127,6 @@ h4 {
   margin-left: 100px;
   margin-right: 100px;
 }
-
 
 .clear-dates {
   display: block;
