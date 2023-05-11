@@ -25,7 +25,7 @@ const resultContainer = document.getElementById("displayed-result");
 const datesHistory = document.getElementById("dates-history");
 const addDates = document.getElementById("add-dates");
 
-// document.addEventListener("DOMContentLoaded", getDates);
+document.addEventListener("DOMContentLoaded", displayDatesFromLocalStorage);
 
 // listeners for options checkboxes
 optionAllDays.addEventListener("click", addOptionAllDays);
@@ -257,7 +257,6 @@ function setPresetValue() {
   }
   if (selectedPreset === "addMonth") {
     endDate.setMonth(endDate.getMonth() + 1);
-    console.log("endDate -->", endDate);
     secondDateInput.value = endDate.toISOString().slice(0, 10);
     values.secondInput = new Date(secondDateInput.value);
   }
@@ -302,7 +301,6 @@ function getPeriodMilliseconds(startDate, endDate, periodOption) {
   if (givenPerionOption === "allDay") {
     // calculate all days result in milliseconds
     allDayMilliseconds = endDate - startDate;
-    console.log("allDayMilliseconds -->", allDayMilliseconds);
     return allDayMilliseconds;
   }
 
@@ -313,7 +311,6 @@ function getPeriodMilliseconds(startDate, endDate, periodOption) {
       }
       currentDate.setDate(currentDate.getDate() + 1);
     }
-    console.log("weekdayMilliseconds -->", weekdayMilliseconds);
     return weekdayMilliseconds - 86400000;
   }
 
@@ -324,7 +321,6 @@ function getPeriodMilliseconds(startDate, endDate, periodOption) {
       }
       currentDate.setDate(currentDate.getDate() + 1);
     }
-    console.log("weekendDaysMilliseconds -->", weekendDaysMilliseconds);
     return weekendDaysMilliseconds;
   }
 }
@@ -374,8 +370,7 @@ function calculateDimension(period, dimension) {
 
 function createTableRows(selector, storageData) {
   const tbody = selector;
-  console.log('storageData -->', storageData);
-
+  tbody.innerHTML = '';
   storageData.forEach(function(dataItem) {
     const row = document.createElement("tr");
     Object.values(dataItem).forEach(function(value) {
@@ -406,7 +401,6 @@ function displayDatesFromLocalStorage() {
   if (datesHistory.hasAttribute("hidden")) {
     datesHistory.removeAttribute("hidden");
   }
-  // addAndFillNewRows(localStorageElements);
   createTableRows(addDates, localStorageElements);
 }
 
@@ -455,5 +449,3 @@ function calculateDiff(e) {
   hideValidationMessage();
   calculateResult(values.firstInput, values.secondInput);
 }
-
-// createTableRows(addDates);
