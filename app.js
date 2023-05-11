@@ -265,7 +265,6 @@ function setPresetValue() {
 
 function clearPresetValue() {
   secondDateInput.value = "";
-  // need to clear also set variable value
   values.secondInput = "";
 }
 
@@ -309,28 +308,22 @@ function getPeriodMilliseconds(startDate, endDate, periodOption) {
 
   if (givenPerionOption === "weekDay") {
     while (currentDate <= endDate) {
-      // Is the current day a weekday?
       if (currentDate.getDay() !== 0 && currentDate.getDay() !== 6) {
         weekdayMilliseconds += 86400000; // add milliseconds for one day
       }
-      // Move to the next day
       currentDate.setDate(currentDate.getDate() + 1);
     }
-    // Return the number of weekday milliseconds
     console.log("weekdayMilliseconds -->", weekdayMilliseconds);
     return weekdayMilliseconds - 86400000;
   }
 
   if (givenPerionOption === "weekendDay") {
     while (currentDate <= endDate) {
-      // Is the current day a weekend day?
       if (currentDate.getDay() === 0 || currentDate.getDay() === 6) {
         weekendDaysMilliseconds += 86400000;
       }
-      // Move to the next day
       currentDate.setDate(currentDate.getDate() + 1);
     }
-    // Return the number of weekend days
     console.log("weekendDaysMilliseconds -->", weekendDaysMilliseconds);
     return weekendDaysMilliseconds;
   }
@@ -373,39 +366,6 @@ function calculateDimension(period, dimension) {
   }
 }
 
-function addAndFillNewRows(storageElements) {
-  storageElements.forEach(element => {
-
-    // get the table element by its ID
-    const table = addDates;
-
-    // create a new row
-    const newRow = document.createElement("tr");
-  
-    // create three new cells
-    const cell1 = document.createElement("td");
-    const cell2 = document.createElement("td");
-    const cell3 = document.createElement("td");
-
-    cell1.style.textAlign = "center";
-    cell2.style.textAlign = "center";
-    cell3.style.textAlign = "center";
-  
-    // add content to the cells (replace with your own values)
-    cell1.innerHTML = element.firstDate;
-    cell2.innerHTML = element.secondDate;
-    cell3.innerHTML = element.difference;
-  
-    // append the cells to the new row
-    newRow.appendChild(cell1);
-    newRow.appendChild(cell2);
-    newRow.appendChild(cell3);
-  
-    // insert the new row after the last existing row
-    table.appendChild(newRow);
-  });
-}
-
 // creating table rows in the beggining of the script
 // create 10 rows in <tbody>
 // wait for data from localeStorage, return nothing
@@ -414,13 +374,13 @@ function addAndFillNewRows(storageElements) {
 
 function createTableRows(selector, storageData) {
   const tbody = selector;
-  console.log('typeof storageData -->', typeof storageData);
   console.log('storageData -->', storageData);
 
   storageData.forEach(function(dataItem) {
     const row = document.createElement("tr");
     Object.values(dataItem).forEach(function(value) {
       const cell = document.createElement("td");
+      cell.style.textAlign = "center";
       const cellText = document.createTextNode(value);
       cell.appendChild(cellText);
       row.appendChild(cell);
@@ -459,10 +419,8 @@ function storeDateInLocalStorage(calculatedDate) {
   if (localStorageElements.length > 10) {
     elementsToAdd = [...localStorageElements.slice(0, 10)];
     localStorage.clear();
-    // localStorage.setItem("dates", JSON.stringify(elementsToAdd));
   } else {
     elementsToAdd = [...localStorageElements];
-    // localStorage.setItem("dates", JSON.stringify(elementsToAdd));
   }
 
   localStorage.setItem("dates", JSON.stringify(elementsToAdd));
