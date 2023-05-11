@@ -25,7 +25,6 @@ const resultContainer = document.getElementById("displayed-result");
 const datesHistory = document.getElementById("dates-history");
 const addDates = document.getElementById("add-dates");
 
-
 // document.addEventListener("DOMContentLoaded", getDates);
 
 // listeners for options checkboxes
@@ -86,16 +85,16 @@ function changeInput(e) {
   }
 }
 
+
+
 function addOptionAllDays(e) {
   if (e.target.checked) {
-    console.log("addOptionAllDays ON -->", e.target.checked);
     // disable other checkboxes
     optionWeekDays.disabled = true;
     optionWeekendDays.disabled = true;
     // activate option for calculations
     optionsValues.allDay = true;
   } else {
-    console.log("addOptionAllDays OFF -->", e.target.checked);
     // enable back checkboxes
     optionWeekDays.disabled = false;
     optionWeekendDays.disabled = false;
@@ -106,14 +105,12 @@ function addOptionAllDays(e) {
 
 function addOptionWeekDays(e) {
   if (e.target.checked) {
-    console.log("addOptionWeekDays ON -->", e.target.checked);
     // disable other checkboxes
     optionAllDays.disabled = true;
     optionWeekendDays.disabled = true;
     // activate option for calculations
     optionsValues.weekDay = true;
   } else {
-    console.log("addOptionWeekDays OFF -->", e.target.checked);
     // enable back checkboxes
     optionAllDays.disabled = false;
     optionWeekendDays.disabled = false;
@@ -124,14 +121,12 @@ function addOptionWeekDays(e) {
 
 function addOptionWeekendDays(e) {
   if (e.target.checked) {
-    console.log("addOptionWeekendDays ON -->", e.target.checked);
     // disable other checkboxes
     optionAllDays.disabled = true;
     optionWeekDays.disabled = true;
     // activate option for calculations
     optionsValues.weekendDay = true;
   } else {
-    console.log("addOptionWeekendDays OFF -->", e.target.checked);
     // enable back checkboxes
     optionAllDays.disabled = false;
     optionWeekDays.disabled = false;
@@ -143,7 +138,6 @@ function addOptionWeekendDays(e) {
 // dimension options checkboxes behavior while active/inactive
 function addDimensionDays(e) {
   if (e.target.checked) {
-    console.log("addDimensionDays ON -->", e.target.checked);
     // disable other checkboxes
     dimensionHours.disabled = true;
     dimensionMinutes.disabled = true;
@@ -151,7 +145,6 @@ function addDimensionDays(e) {
     // activate option for calculations
     dimensionsValues.days = true;
   } else {
-    console.log("addDimensionDays OFF -->", e.target.checked);
     // enable back checkboxes
     dimensionHours.disabled = false;
     dimensionMinutes.disabled = false;
@@ -163,7 +156,6 @@ function addDimensionDays(e) {
 
 function addDimensionHours(e) {
   if (e.target.checked) {
-    console.log("addDimensionHours ON -->", e.target.checked);
     // disable other checkboxes
     dimensionDays.disabled = true;
     dimensionMinutes.disabled = true;
@@ -171,7 +163,6 @@ function addDimensionHours(e) {
     // activate option for calculations
     dimensionsValues.hours = true;
   } else {
-    console.log("addDimensionHours OFF -->", e.target.checked);
     // enable back checkboxes
     dimensionDays.disabled = false;
     dimensionMinutes.disabled = false;
@@ -183,7 +174,6 @@ function addDimensionHours(e) {
 
 function addDimensionMinutes(e) {
   if (e.target.checked) {
-    console.log("addDimensionMinutes ON -->", e.target.checked);
     // disable other checkboxes
     dimensionHours.disabled = true;
     dimensionDays.disabled = true;
@@ -191,7 +181,6 @@ function addDimensionMinutes(e) {
     // activate option for calculations
     dimensionsValues.minutes = true;
   } else {
-    console.log("addDimensionMinutes OFF -->", e.target.checked);
     // enable back checkboxes
     dimensionHours.disabled = false;
     dimensionDays.disabled = false;
@@ -203,7 +192,6 @@ function addDimensionMinutes(e) {
 
 function addDimensionSeconds(e) {
   if (e.target.checked) {
-    console.log("addDimensionSeconds ON -->", e.target.checked);
     // disable other checkboxes
     dimensionHours.disabled = true;
     dimensionMinutes.disabled = true;
@@ -211,7 +199,6 @@ function addDimensionSeconds(e) {
     // activate option for calculations
     dimensionsValues.seconds = true;
   } else {
-    console.log("addDimensionSeconds OFF -->", e.target.checked);
     // enable back checkboxes
     dimensionHours.disabled = false;
     dimensionMinutes.disabled = false;
@@ -223,7 +210,6 @@ function addDimensionSeconds(e) {
 
 function applyPresetWeek(e) {
   if (e.target.checked) {
-    console.log("applyPresetWeek ON -->", e.target.checked);
     // disable other checkboxes
     presetMonth.disabled = true;
 
@@ -231,7 +217,6 @@ function applyPresetWeek(e) {
     presetValues.addWeek = true;
     setPresetValue();
   } else {
-    console.log("applyPresetWeek OFF -->", e.target.checked);
     // enable back checkboxes
     presetMonth.disabled = false;
 
@@ -242,7 +227,6 @@ function applyPresetWeek(e) {
 
 function applyPresetMonth(e) {
   if (e.target.checked) {
-    console.log("applyPresetMonth ON -->", e.target.checked);
     // disable other checkboxes
     presetWeek.disabled = true;
 
@@ -250,7 +234,6 @@ function applyPresetMonth(e) {
     presetValues.addMonth = true;
     setPresetValue();
   } else {
-    console.log("applyPresetMonth OFF -->", e.target.checked);
     // enable back checkboxes
     presetWeek.disabled = false;
 
@@ -305,13 +288,13 @@ function getSelectedOptions() {
   selectedOptions.selectedOption = Object.keys(optionsValues).find(
     (key) => optionsValues[key] === true
   );
-  console.log("getSelectedOptions func inside -->", selectedOptions);
   return selectedOptions;
 }
 
 function getPeriodMilliseconds(startDate, endDate, periodOption) {
   // if no option period selected setup all days to calculate
-  const givenPerionOption = periodOption ?? "allDay";
+  const defaultOption = 'allDay';
+  const givenPerionOption = periodOption ?? defaultOption;
   let currentDate = new Date(startDate);
   let allDayMilliseconds = 0;
   let weekdayMilliseconds = 0;
@@ -390,8 +373,9 @@ function calculateDimension(period, dimension) {
   }
 }
 
-function addAndFillNewRows(params) {
-params.forEach(element => {
+function addAndFillNewRows(storageElements) {
+  storageElements.forEach(element => {
+
     // get the table element by its ID
     const table = addDates;
 
@@ -419,9 +403,30 @@ params.forEach(element => {
   
     // insert the new row after the last existing row
     table.appendChild(newRow);
-});
+  });
+}
 
+// creating table rows in the beggining of the script
+// create 10 rows in <tbody>
+// wait for data from localeStorage, return nothing
+// match <tr> elements indexes with indexes from localeStorage data
+// assign text from every object using textContent to every <tr> and 3 <td> in it
 
+function createTableRows(selector, storageData) {
+  const tbody = selector;
+  console.log('typeof storageData -->', typeof storageData);
+  console.log('storageData -->', storageData);
+
+  storageData.forEach(function(dataItem) {
+    const row = document.createElement("tr");
+    Object.values(dataItem).forEach(function(value) {
+      const cell = document.createElement("td");
+      const cellText = document.createTextNode(value);
+      cell.appendChild(cellText);
+      row.appendChild(cell);
+    });
+    tbody.appendChild(row);
+  });
 }
 
 function checkLocalStorage() {
@@ -430,7 +435,6 @@ function checkLocalStorage() {
       return dates;
     }
     dates = JSON.parse(localStorage.getItem("dates"));
-    console.log('dates -->', dates);
     return dates;
 }
 
@@ -442,10 +446,11 @@ function displayDatesFromLocalStorage() {
   if (datesHistory.hasAttribute("hidden")) {
     datesHistory.removeAttribute("hidden");
   }
-  addAndFillNewRows(localStorageElements);
+  // addAndFillNewRows(localStorageElements);
+  createTableRows(addDates, localStorageElements);
 }
 
-function storeTaskInLocalStorage(calculatedDate) {
+function storeDateInLocalStorage(calculatedDate) {
   let elementsToAdd = [];
   let localStorageElements = checkLocalStorage();
 
@@ -454,11 +459,14 @@ function storeTaskInLocalStorage(calculatedDate) {
   if (localStorageElements.length > 10) {
     elementsToAdd = [...localStorageElements.slice(0, 10)];
     localStorage.clear();
-    localStorage.setItem("dates", JSON.stringify(elementsToAdd));
+    // localStorage.setItem("dates", JSON.stringify(elementsToAdd));
   } else {
     elementsToAdd = [...localStorageElements];
-    localStorage.setItem("dates", JSON.stringify(elementsToAdd));
+    // localStorage.setItem("dates", JSON.stringify(elementsToAdd));
   }
+
+  localStorage.setItem("dates", JSON.stringify(elementsToAdd));
+
 }
 
 function calculateResult(firstDateValue, secondDateValue) {
@@ -470,12 +478,12 @@ function calculateResult(firstDateValue, secondDateValue) {
   );
   const displayResult = calculateDimension(getPeriod, selectedDimension);
 
-  const localStorageValue = {
+  const localStorageObject = {
     firstDate: firstDateValue.toDateString(),
     secondDate: secondDateValue.toDateString(),
     difference: displayResult,
   };
-  storeTaskInLocalStorage(localStorageValue);
+  storeDateInLocalStorage(localStorageObject);
   displayDatesFromLocalStorage();
 
   resultContainer.textContent = displayResult;
@@ -489,3 +497,5 @@ function calculateDiff(e) {
   hideValidationMessage();
   calculateResult(values.firstInput, values.secondInput);
 }
+
+// createTableRows(addDates);
